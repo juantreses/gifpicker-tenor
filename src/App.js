@@ -1,31 +1,32 @@
-import React, {Component} from 'react';
-import axios from 'axios';
-import Form from './components/Form';
-import Result from './components/Result';
+import React, { Component } from "react";
+import axios from "axios";
+import Form from "./components/Form";
+import Result from "./components/Result";
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      gifs : []
-    }
+      gifs: [],
+    };
   }
 
   searchGifs = (str) => {
-    axios.get("https://api.tenor.com/v1/search?key=9C84Q70BY1O0&limit=10&q=" + str)
-      .then(
-        result => this.setState({
-          gifs : result.data.results
+    axios
+      .get(`${process.env.REACT_APP_ENDPOINT}&limit=10&q=${str}`)
+      .then((result) =>
+        this.setState({
+          gifs: result.data.results,
         })
-        )
-  }
+      );
+  };
 
   render() {
     return (
       <div className="App">
         <h1>Search a GIF</h1>
-        <Form search={this.searchGifs}/>  
-        <Result gifs={this.state.gifs}/>    
+        <Form search={this.searchGifs} />
+        <Result gifs={this.state.gifs} />
       </div>
     );
   }
